@@ -4,7 +4,7 @@ from functools import partial
 from sys import exit
 import re
 
-
+# JSON z układem stacji
 stacje = {
     "PS2_711": {
         "702": [
@@ -914,6 +914,7 @@ lastStation = set()
 stamp = 0
 V_koszyka = 22815
 
+
 Lstacja = "Stacja"
 Loststacja = "Ostatnia stacja"
 Lkoszyk = "Weź koszyk"
@@ -933,6 +934,8 @@ def main():
     root.attributes("-fullscreen", True)
     menuLayout()
     root.mainloop()
+
+# layout okna do wyboru stacji
 
 
 def menuLayout():
@@ -988,6 +991,8 @@ def menuLayout():
     exitButton.grid(row=0, column=5)
     setButtonsInMenu()
 
+# układanie przycisków z numerami stacji
+
 
 def setButtonsInMenu():
     row = 0
@@ -1013,6 +1018,8 @@ def selectStation(stacja):
     selectedStation = stacja
     stationLayout()
 
+# czyszczenie pola z numerem kuwety
+
 
 def wipeEntry():
     global barcode_entry
@@ -1030,6 +1037,8 @@ def back():
     for widget in root.winfo_children():
         widget.destroy()
     menuLayout()
+
+# Zmiana na język PL
 
 
 def plLanguage():
@@ -1063,6 +1072,8 @@ def plLanguage():
         Lwyczysc = "Wyczyść"
         Lzmien = "Zmień język"
 
+# Zmiana na język UA
+
 
 def uaLanguage():
     global Lstacja, Loststacja, Lkoszyk, Lpowrot, Lwyjdz, Lwybierz_stacje, Lwyczysc, Lzmien
@@ -1094,6 +1105,8 @@ def uaLanguage():
         Lwybierz_stacje = "Виберіть станцію"
         Lwyczysc = "Вичистіть"
         Lzmien = "змінити мову"
+
+# Layout wybranej stacji
 
 
 def stationLayout():
@@ -1194,6 +1207,8 @@ def stationLayout():
     layoutStation.pack(fill="both", expand=True)
     layoutRack.pack(fill="both", expand=True)
     setStationLed()
+
+# rozmieszczanie elementów dla wybranej stacji
 
 
 def setStationLed():
@@ -1349,6 +1364,8 @@ def select_all():
     except tk.TclError:
         pass
 
+# Odświeżanie całej pętli
+
 
 def refresh():
     global layoutStation, layoutRack, handle, rackLed, stationLed, barcode_entry, oldTote
@@ -1359,9 +1376,11 @@ def refresh():
             oldTote = actTote
         root.after(700, lambda: [refresh(), select_all()])
 
+# główna kwerenda pobieranie miejsc komisji
+
 
 def query():
-    global barcode_entry, selectedStation, stationTPA, rackTPA, handle, lastStation, c1, koszyczek
+    global barcode_entry, selectedStation, stationTPA, rackTPA, lastStation, c1, koszyczek
     koszyczek = False
     rackTPA.clear()
     stationTPA.clear()
@@ -1411,6 +1430,9 @@ def query():
                     stationTPA.append(str(i[2]))
                 else:
                     rackTPA.append(str(i[2]))
+
+# dodawanie do okna znaczników koszyka i ostatniej stacji
+
     if len(rackTPA) != 0 or len(stationTPA) != 0:
         koszyczek = get_volume()
         if koszyczek == True:
@@ -1436,6 +1458,8 @@ def query():
                 ):
                     widget.configure(bg="#abd6f8")
 
+
+# zmiana koloru kafelków z pozycjami do pobrania
 
 def configTpaLed():
     global stationTPA, rackTPA, ost_mk, stamp, layoutStation, layoutRack, stationLed, rackLed, stationLocation
@@ -1515,6 +1539,8 @@ def blinkLastStation():
     bg = ost_stacja.cget("background")
     fg = ost_stacja.cget("foreground")
     ost_stacja.configure(background=fg, foreground=bg)
+
+# kwerenda pobierania objętości komisji
 
 
 def get_volume():

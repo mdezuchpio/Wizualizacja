@@ -1407,7 +1407,7 @@ def query():
                     and tpkonz=100"
         connection_status = pyodbc.connect(
             driver="{iSeries Access ODBC Driver}",
-            system="192.168.172.10",
+            system="192.168.171.10",
             uid="skl3",
             pwd="skl3",
         )
